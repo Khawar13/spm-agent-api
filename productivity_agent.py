@@ -172,6 +172,38 @@ class ProductivityAgent:
 
         elif task == "get_insights":
             return {"status": "ok", "insights": self.get_personalized_insights(user_id)}
+        
+        elif task == "goal":
+            # Extract goal fields from params
+            title = params.get("title")
+            description = params.get("description")
+            category = params.get("category")
+            goal_type = params.get("goal_type")
+            deadline = params.get("deadline")
+            priority = params.get("priority")
+
+            # Validate required fields
+            if not all([title, description, category, goal_type, deadline, priority]):
+                return {"status": "error", "message": "Missing required goal fields in params."}
+
+            # Create goal via agent method
+            goal_id = self.create_goal(
+                user_id=user_id,
+                title=title,
+                description=description,
+                category=category,
+                goal_type=goal_type,
+                deadline=deadline,
+                priority=priority
+            )
+
+            return {
+                "status": "created",
+                "goal_id": goal_id,
+                "type": "goal",
+                "used_data": params
+            }
+
 
         else:
             return {"status": "error", "message": f"Unknown task '{task}'."}

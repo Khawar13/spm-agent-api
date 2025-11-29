@@ -457,6 +457,6 @@ def get_insights():
 # ------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    # You can change host/port as you like.
-    # debug=True is handy for development; turn it off in production.
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    # Disable the reloader on Windows to prevent socket errors
+    app.run(host="0.0.0.0", port=8000, debug=True, use_reloader=False)
+
