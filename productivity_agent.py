@@ -12,6 +12,7 @@ import json
 from pymongo import MongoClient
 
 
+
 DATE_FORMAT = "%Y-%m-%d"
 
 
@@ -88,34 +89,36 @@ class ProductivityAgent:
 
     # ---------- NLP / Text processor ----------
     def _init_text_processing(self):
-        # Try to set up lemmatizer / wordnet
+        # ----------------------------
+        # Ensure WordNet is available
+        # ----------------------------
         try:
             import nltk
-            from nltk.stem import WordNetLemmatizer
-            from nltk.corpus import wordnet
-            nltk_available = True
-            try:
-                # ensure wordnet is available (user should have downloaded)
-                wordnet.ensure_loaded()
-            except Exception:
-                pass
-            self.lemmatizer = WordNetLemmatizer()
-            self._use_lemmatizer = True
-        except Exception:
-            # fallback to trivial stemmer (strip common suffixes)
-            self._use_lemmatizer = False
-            self.lemmatizer = None
+            # check if WordNet is already downloaded
+            nltk.data.find("corpora/wordnet")
+        except LookupError:
+            # download WordNet at runtime
+            nltk.download("wordnet", quiet=True)
 
-        # attempt to import WordNet synonyms expansion
+        # ----------------------------
+        # Try to set up lemmatizer / wordnet
+        # ----------------------------
         try:
+            from nltk.stem import WordNetLemmatizer
             from nltk.corpus import wordnet as wn
+            self.lemmatizer = WordNetLemmatizer()
             self._wn = wn
+            self._use_lemmatizer = True
             self._use_wordnet = True
         except Exception:
+            self.lemmatizer = None
             self._wn = None
+            self._use_lemmatizer = False
             self._use_wordnet = False
 
+        # ----------------------------
         # Attempt VADER sentiment
+        # ----------------------------
         try:
             from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
             self.sent_analyzer = SentimentIntensityAnalyzer()

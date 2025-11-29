@@ -1,21 +1,21 @@
 """
 agent_api.py
 
-Flask HTTP API wrapper around ProductivityAgent.
+    Flask HTTP API wrapper around ProductivityAgent.
 
-Exposes:
-- /health                          (GET)
-- /agent/json                      (POST)   --> generic JSON contract entry
-- /agent/message                   (POST)   --> free-form text message
-- /goals                           (POST)   --> create goal
-- /goals/<goal_id>/progress        (PATCH)  --> update goal progress
-- /goals                           (GET)    --> list goals for a user
-- /reflections                     (POST)   --> add reflection
-- /reminders                       (GET)    --> generate reminders
-- /report                          (GET)    --> text productivity report
-- /analysis                        (GET)    --> reflection analysis
-- /accountability                  (GET)    --> accountability payload
-- /insights                        (GET)    --> personalized insights
+    Exposes:
+    - /health                          (GET)
+    - /agent/json                      (POST)   --> generic JSON contract entry
+    - /agent/message                   (POST)   --> free-form text message
+    - /goals                           (POST)   --> create goal
+    - /goals/<goal_id>/progress        (PATCH)  --> update goal progress
+    - /goals                           (GET)    --> list goals for a user
+    - /reflections                     (POST)   --> add reflection
+    - /reminders                       (GET)    --> generate reminders
+    - /report                          (GET)    --> text productivity report
+    - /analysis                        (GET)    --> reflection analysis
+    - /accountability                  (GET)    --> accountability payload
+    - /insights                        (GET)    --> personalized insights
 
 All responses are JSON.
 """
