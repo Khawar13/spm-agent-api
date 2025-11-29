@@ -1,2 +1,7 @@
-pymongo>=4.6.0
-
+Flask
+python-dotenv
+pymongo
+dnspython
+python-dateutil
+nltk
+vaderSentiment
